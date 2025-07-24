@@ -89,7 +89,7 @@ const LandingPage = () => {
     'Cultural Compatibility Matching',
     'Family Background Verification',
     'Secure Communication',
-    '24/7 Customer Support'
+    '24/7 Customer Support' 
   ];
 
   return (
@@ -194,7 +194,7 @@ const LandingPage = () => {
     <img
       src={step.image}
       alt={`Step ${index + 1}`}
-      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 bg-no-repeat"
     />
 
     {/* Icon on top right of image */}

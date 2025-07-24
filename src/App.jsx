@@ -11,7 +11,8 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path='/' element={<LandingPage/>} />
-        <Route path='/login' element={<LoginSignup/>} />
+        <Route path='/login' element={<LoginSignup isOpen={true} onClose={() => {}} />} />
+
       </Routes>
     </>
   )
