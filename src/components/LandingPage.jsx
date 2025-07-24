@@ -109,16 +109,16 @@ const LandingPage = () => {
         <div className="relative z-10 h-full flex mt-15 justify-center px-4">
           <div className="text-center max-w-4xl mx-auto">
             
-            <h1 className="text-2xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-400 animate-slide-up">
+            <h1 className="text-2xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-yellow-200 animate-slide-up">
               Where Traditions Meet Technology
             </h1>
             
-            <p className="text-lg md:text-lg text-yellow-200 mb-8 animate-slide-up delay-300">
+            <p className="text-lg md:text-lg text-yellow-500 mb-8 animate-slide-up delay-300">
               Your perfect life partner is just a click away
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up delay-500">
-              <button className="border-2 border-red-300 text-red-300 px-8 py-4 rounded-full font-bold text-lg hover:from-yellow-300 hover:to-yellow-400 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+              <button className="border-2 border-pink-200 text-pink-200 px-8 py-4 rounded-full font-bold text-lg hover:from-yellow-300 hover:to-yellow-400 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                 Start Your Journey
                 <ArrowRight className="inline-block ml-2 w-5 h-5" />
               </button>
