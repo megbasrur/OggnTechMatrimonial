@@ -95,7 +95,7 @@ const LandingPage = () => {
   return (
     <div className="font-sans text-gray-800 overflow-hidden">
       {/* Hero Section */}
-      <section className="relative h-screen bg-gradient-to-br from-red-900 via-red-700 to-amber-600 overflow-hidden" 
+      <section className="mt-10 relative h-screen bg-gradient-to-br from-red-900 via-red-700 to-amber-600 overflow-hidden" 
       style={{
         backgroundImage: `url('/src/assets/bg2.png')`,
       }}>
