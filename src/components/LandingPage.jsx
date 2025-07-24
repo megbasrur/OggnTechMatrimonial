@@ -148,7 +148,7 @@ const LandingPage = () => {
             and personalized recommendations that honor your traditions while embracing modern convenience.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-white max-w-6xl mx-auto">
             {features.map((feature, index) => (
               <div 
                 key={index}
@@ -221,7 +221,7 @@ const LandingPage = () => {
       {/* Testimonials */}
       <section 
         id="testimonials"
-        className={`py-20 bg-gradient-to-b from-red-50 to-yellow-50 transition-all duration-1000 ${
+        className={`py-20 bg-white transition-all duration-1000 ${
           isVisible.testimonials ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
@@ -234,11 +234,11 @@ const LandingPage = () => {
             Real couples, real stories, real happiness - discover how we've helped thousands find their soulmates
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-8xl mx-auto border-4 border-pink-300 p-10 rounded-2xl">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="group bg-white p-8 shadow-xl rounded-2xl border-t-4 border-yellow-500 hover:border-red-500 transform hover:-translate-y-2 transition-all duration-500 hover:shadow-2xl"
+                className="group bg-white p-8 shadow-xl rounded-2xl transform hover:-translate-y-2 transition-all duration-500 hover:shadow-3xl"
               >
                 {/* Quote */}
                 <div className="text-6xl text-yellow-400 mb-4 opacity-50">"</div>
@@ -271,20 +271,24 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r from-red-600 via-red-700 to-yellow-600 text-white text-center">
-        <div className="container mx-auto px-4">
-          <Heart className="w-16 h-16 text-yellow-300 mx-auto mb-6 animate-pulse" />
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Ready to Begin Your Love Story?
-          </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join thousands of happy couples who found their perfect match through our platform
-          </p>
-          <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-red-900 px-12 py-4 rounded-full font-bold text-xl hover:from-yellow-300 hover:to-yellow-400 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-            Start Your Journey Today
-            <ArrowRight className="inline-block ml-3 w-6 h-6" />
-          </button>
+     {/* Call to Action */}
+<section className="py-20 bg-gradient-to-r from-yellow-400 to-red-700 text-white text-center">
+  <div className="container mx-auto px-4">
+    <Heart className="w-16 h-16 text-green-400 mx-auto mb-6 animate-pulse" />
+    
+    <h2 className="text-4xl md:text-5xl font-bold mb-6">
+      Ready to Begin Your Love Story?
+    </h2>
+    
+    <p className="text-xl mb-8 max-w-2xl mx-auto">
+      Join thousands of happy couples who found their perfect match through our platform
+    </p>
+    
+    <button className="bg-yellow-400 hover:bg-yellow-300 text-red-900 px-12 py-4 rounded-full font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+      Start Your Journey Today
+      <ArrowRight className="inline-block ml-3 w-6 h-6" />
+    </button>
+
         </div>
       </section>
 
