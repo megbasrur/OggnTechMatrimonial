@@ -271,6 +271,7 @@ const LandingPage = () => {
         </div>
       </section>
 
+
      {/* Call to Action */}
 <section className="py-20 bg-gradient-to-r from-yellow-400 to-red-700 text-white text-center">
   <div className="container mx-auto px-4">

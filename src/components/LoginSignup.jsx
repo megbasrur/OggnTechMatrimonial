@@ -332,6 +332,25 @@ function LoginSignup() {
           </div>
         </div>
 
+        {/* Newsletter Signup */}
+        <div className="py-8 border-t border-red-700">
+          <div className="text-center">
+            <h3 className="text-xl font-semibold text-yellow-200 mb-2">Stay Connected</h3>
+            <p className="text-gray-200 text-sm mb-6">Get dating tips and success stories delivered to your inbox</p>
+            <div className="flex flex-col sm:flex-row max-w-md mx-auto gap-3">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 rounded-full bg-red-700/50 border border-red-600 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:border-transparent transition-all duration-300"
+              />
+              <button className="relative overflow-hidden bg-gradient-to-r from-yellow-400 to-yellow-500 text-red-900 px-6 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group">
+                <span className="relative z-10">Subscribe</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Footer */}
         <div className="px-8 pb-6">
           <div className="text-center text-xs text-gray-500 border-t border-gray-700 pt-4">
