@@ -1,228 +1,346 @@
 import React, { useState } from 'react';
-import { Heart, X, Eye, EyeOff, Mail, Lock, User, Phone } from 'lucide-react';
+import { Heart, Eye, EyeOff, Mail, Lock, User, Phone, Calendar,ChevronLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const LoginSignup = ({ isOpen, onClose }) => {
-  const [isLogin, setIsLogin] = useState(true);
+function LoginSignup() {
+  const [isLogin, setIsLogin] = useState(true); 
+  // isLogin is true then the login page gets rendered else signup page gets rendered
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
-    phone: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
+    dateOfBirth: '',
+    gender: ''
   });
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Email validation
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+
+    // Password validation
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+
+    // Signup specific validations
+    if (!isLogin) {
+      if (!formData.firstName) {
+        newErrors.firstName = 'First name is required';
+      }
+      if (!formData.lastName) {
+        newErrors.lastName = 'Last name is required';
+      }
+      if (!formData.phone) {
+        newErrors.phone = 'Phone number is required';
+      }
+      if (!formData.dateOfBirth) {
+        newErrors.dateOfBirth = 'Date of birth is required';
+      }
+      if (!formData.gender) {
+        newErrors.gender = 'Gender is required';
+      }
+      if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = 'Passwords do not match';
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const switchMode = () => {
+  const handleSubmit = () => {
+    if (validateForm()) {
+      // Simulate API call
+      console.log('Form submitted:', { ...formData, action: isLogin ? 'login' : 'signup' });
+      alert(`${isLogin ? 'Login' : 'Signup'} successful! Check console for form data.`);
+    }
+  };
+
+  const toggleMode = () => {
     setIsLogin(!isLogin);
     setFormData({
-      name: '',
       email: '',
-      phone: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      dateOfBirth: '',
+      gender: ''
     });
+    setErrors({});
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl overflow-hidden">
-        {/* Header with gradient */}
-        <div className="relative bg-gradient-to-r from-red-800 to-red-900 px-6 py-8 text-center">
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-          
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <div className="relative">
-              <Heart className="w-8 h-8 text-yellow-300" fill="currentColor" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-full animate-pulse"></div>
+    <div className="min-h-screen bg-gradient-to-br from-red-900 via-black to-red-800 flex items-center justify-center p-4 mt-9">
+      <div className="bg-black/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-red-500/20 w-full max-w-md">
+          <Link to="/" className="inline-block px-6 py-2 bg-transparent text-red-500 font-semibold rounded-full hover:bg-red-200 transition">
+            <ChevronLeft/>
+          </Link>
+        {/* Header */}
+        <div className="text-center p-8 pb-6">
+          <div className="flex justify-center mb-4">
+            <div className="bg-gradient-to-r from-red-500 to-yellow-400 p-3 rounded-full">
+              <Heart className="w-8 h-8 text-white fill-current" />
             </div>
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-yellow-200 to-yellow-300 bg-clip-text text-transparent">
-              PerfectMatch
-            </h2>
           </div>
-          
-          <h3 className="text-xl font-semibold text-white mb-2">
-            {isLogin ? 'Welcome Back!' : 'Join Us Today!'}
-          </h3>
-          <p className="text-red-100 text-sm">
-            {isLogin ? 'Sign in to find your perfect match' : 'Create your account to get started'}
+          <h1 className="text-3xl font-bold text-white mb-2">
+            Find Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-yellow-400">Soulmate</span>
+          </h1>
+          <p className="text-gray-300 text-sm">
+            {isLogin ? 'Welcome back to your love journey' : 'Start your journey to find true love'}
           </p>
         </div>
 
-        {/* Form */}
-        <div className="px-6 py-8">
-          <div className="space-y-6">
-            {/* Name field - only for signup */}
-            {!isLogin && (
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="w-5 h-5 text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 outline-none"
-                  required={!isLogin}
-                />
-              </div>
-            )}
-
-            {/* Email field */}
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Mail className="w-5 h-5 text-gray-400" />
-              </div>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email Address"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 outline-none"
-                required
-              />
-            </div>
-
-            {/* Phone field - only for signup */}
-            {!isLogin && (
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Phone className="w-5 h-5 text-gray-400" />
-                </div>
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone Number"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 outline-none"
-                  required={!isLogin}
-                />
-              </div>
-            )}
-
-            {/* Password field */}
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="w-5 h-5 text-gray-400" />
-              </div>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 outline-none"
-                required
-              />
+        {/* Form rendering options */}
+        <div className="px-8 pb-8">
+          <div className="space-y-4">
+            {/* Login/Signup Toggle */}
+            <div className="flex bg-gray-800 rounded-lg p-1 mb-6">
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                onClick={() => setIsLogin(true)}
+                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+                  isLogin 
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg' 
+                    : 'text-gray-400 hover:text-white'
+                }`}
               >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                Login
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsLogin(false)}
+                className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
+                  !isLogin 
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg' 
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                Sign Up
               </button>
             </div>
 
-            {/* Confirm Password - only for signup */}
+            {/* Signup Fields */}
             {!isLogin && (
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="w-5 h-5 text-gray-400" />
+              <>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <input
+                        type="text"
+                        name="firstName"
+                        placeholder="First Name"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                      />
+                    </div>
+                    {errors.firstName && <p className="text-red-400 text-xs mt-1">{errors.firstName}</p>}
+                  </div>
+                  <div>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <input
+                        type="text"
+                        name="lastName"
+                        placeholder="Last Name"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                      />
+                    </div>
+                    {errors.lastName && <p className="text-red-400 text-xs mt-1">{errors.lastName}</p>}
+                  </div>
                 </div>
+
+                <div>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="Phone Number"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    />
+                  </div>
+                  {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
+                </div>
+
+                <div>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="date"
+                      name="dateOfBirth"
+                      placeholder="Date of Birth"
+                      value={formData.dateOfBirth}
+                      onChange={handleInputChange}
+                      className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    />
+                  </div>
+                  {errors.dateOfBirth && <p className="text-red-400 text-xs mt-1">{errors.dateOfBirth}</p>}
+                </div>
+
+                <div>
+                  <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                  {errors.gender && <p className="text-red-400 text-xs mt-1">{errors.gender}</p>}
+                </div>
+              </>
+            )}
+
+            {/* Email */}
+            <div>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  value={formData.confirmPassword}
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300 outline-none"
-                  required={!isLogin}
+                  className="w-full pl-10 pr-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
                 />
+              </div>
+              {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+            </div>
+
+            {/* Password */}
+            <div>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-12 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+              {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password}</p>}
+            </div>
+
+            {/* Confirm Password (Signup only) */}
+            {!isLogin && (
+              <div>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-12 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+                {errors.confirmPassword && <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>}
               </div>
             )}
 
-            {/* Forgot Password - only for login */}
+            {/* Remember Me & Forgot Password */}
             {isLogin && (
-              <div className="text-right">
-                <a href="#" className="text-sm text-red-600 hover:text-red-700 transition-colors">
-                  Forgot Password?
-                </a>
+              <div className="flex items-center justify-between text-sm">
+                <label className="flex items-center text-gray-300">
+                  <input type="checkbox" className="mr-2 rounded border-gray-600 bg-gray-800 text-red-500 focus:ring-red-500" />
+                  Remember me
+                </label>
+                <button type="button" className="text-red-400 hover:text-red-300 transition-colors">
+                  Forgot password?
+                </button>
               </div>
             )}
 
             {/* Submit Button */}
             <button
-              type="button"
               onClick={handleSubmit}
-              className="w-full bg-gradient-to-r from-red-800 to-red-900 text-white py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-red-700 hover:to-red-800"
+              className="w-full py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 focus:ring-4 focus:ring-red-500/30 cursor-pointer text-center"
             >
               {isLogin ? 'Sign In' : 'Create Account'}
             </button>
 
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">or</span>
-              </div>
-            </div>
-
-            {/* Google Sign In */}
-            <button
-              type="button"
-              className="w-full flex items-center justify-center space-x-3 bg-white border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
-            >
-              <svg className="w-5 h-5" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-              </svg>
-              <span>Continue with Google</span>
-            </button>
-          </div>
-
-          {/* Switch between Login/Signup */}
-          <div className="mt-8 text-center">
-            <p className="text-gray-600">
-              {isLogin ? "Don't have an account? " : "Already have an account? "}
+            {/* Toggle Link */}
+            <div className="text-center text-sm">
+              <span className="text-gray-400">
+                {isLogin ? "Don't have an account? " : "Already have an account? "}
+              </span>
               <button
-                onClick={switchMode}
-                className="text-red-600 hover:text-red-700 font-semibold transition-colors"
+                type="button"
+                onClick={toggleMode}
+                className="text-yellow-400 hover:text-yellow-300 font-medium transition-colors"
               >
-                {isLogin ? 'Sign Up' : 'Sign In'}
+                {isLogin ? 'Sign up here' : 'Sign in here'}
               </button>
-            </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="px-8 pb-6">
+          <div className="text-center text-xs text-gray-500 border-t border-gray-700 pt-4">
+            By {isLogin ? 'signing in' : 'creating an account'}, you agree to our Terms of Service and Privacy Policy
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default LoginSignup;
