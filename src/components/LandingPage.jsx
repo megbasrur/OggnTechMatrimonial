@@ -124,6 +124,24 @@ const LandingPage = () => {
   },
 ];
 
+const statistics = [
+  {
+    value: '20K+',
+    label: 'Satisfied Customers',
+  },
+  {
+    value: '10+',
+    label: 'Years of Experience',
+  },
+  {
+    value: '15K+',
+    label: 'Successful Matches',
+  },
+  {
+    value: '5K+',
+    label: 'Active Users',
+  },
+];
 
   return (
     <div className="font-sans text-gray-800 overflow-hidden">
@@ -181,7 +199,18 @@ const LandingPage = () => {
           and personalized recommendations that honor your traditions while embracing modern convenience.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-white max-w-6xl mx-auto">
+{/* Statistics Section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto mb-15">
+          {statistics.map((stat, index) => (
+            <div key={index} className="text-center border-2 border-amber-300 rounded-2xl p-4">
+              <p className="text-4xl font-bold text-green-600">{stat.value}</p>
+              <p className="text-lg text-gray-700">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2 className='text-3xl font-bold mb-5 text-red-700'>Our Features</h2>
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-white max-w-6xl mx-auto mb-16">
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
@@ -195,6 +224,8 @@ const LandingPage = () => {
             );
           })}
         </div>
+
+        
       </div>
     </section>
 
@@ -309,7 +340,7 @@ const LandingPage = () => {
 
 
      {/* Call to Action */}
-<section className="py-20 bg-gradient-to-r from-yellow-200 to-yellow-400 text-red-600 text-center">
+<section className="py-20 bg-gradient-to-r from-yellow-200 to-yellow-500 text-red-600 text-center">
   <div className="container mx-auto px-4">
     <Heart className="w-16 h-16 text-yellow-600 mx-auto mb-6 animate-pulse" />
     
