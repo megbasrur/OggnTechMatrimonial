@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Shield, Users, Star, ArrowRight, Check } from 'lucide-react';
+import {
+  Heart,
+  Shield,
+  Users,
+  Star,
+  ArrowRight,
+  EyeOff,
+  Users2,
+  HeartHandshake,
+  ShieldCheck,
+  MessageCircleIcon,
+  HeadsetIcon,
+  Check,
+} from 'lucide-react';
 import P1 from '../assets/p1.png';
 import P2 from '../assets/p2.png';
 import P3 from '../assets/p3.png';
 import P4 from '../assets/p4.png';
 import P5 from '../assets/p5.png';
+
 
 const LandingPage = () => {
   const [isVisible, setIsVisible] = useState({});
@@ -83,14 +97,33 @@ const LandingPage = () => {
     },
   ];
 
-  const features = [
-    'Verified Profiles Only',
-    'Advanced Privacy Controls',
-    'Cultural Compatibility Matching',
-    'Family Background Verification',
-    'Secure Communication',
-    '24/7 Customer Support' 
-  ];
+ const features = [
+  {
+    title: 'Verified Profiles Only',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Advanced Privacy Controls',
+    icon: EyeOff,
+  },
+  {
+    title: 'Cultural Compatibility Matching',
+    icon: HeartHandshake,
+  },
+  {
+    title: 'Family Background Verification',
+    icon: Users2,
+  },
+  {
+    title: 'Secure Communication',
+    icon: MessageCircleIcon,
+  },
+  {
+    title: '24/7 Customer Support',
+    icon: HeadsetIcon,
+  },
+];
+
 
   return (
     <div className="font-sans text-gray-800 overflow-hidden">
@@ -131,36 +164,39 @@ const LandingPage = () => {
       </section>
 
       {/* Why This Website */}
-      <section 
-        id="why"
-        className={`py-20 bg-white transition-all duration-1000 ${
-          isVisible.why ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}
-      >
-        <div className="container mx-auto px-4 text-center mt-3">
-          <h2 className="text-5xl font-bold text-red-700 mb-8">
-            Why Choose Us?
-          </h2>
-          
-          <p className="max-w-4xl mx-auto text-xl text-gray-700 mb-12 leading-relaxed">
-            We combine sacred cultural values with cutting-edge matchmaking technology to help
-            you find your perfect life partner. Our platform ensures verified profiles, secure communication,
-            and personalized recommendations that honor your traditions while embracing modern convenience.
-          </p>
+     <section 
+      id="why"
+      className={`py-20 bg-white transition-all duration-1000 ${
+        isVisible.why ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+    >
+      <div className="container mx-auto px-4 text-center mt-3">
+        <h2 className="text-5xl font-bold text-red-700 mb-8">
+          Why Choose Us?
+        </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-white max-w-6xl mx-auto">
-            {features.map((feature, index) => (
+        <p className="max-w-4xl mx-auto text-xl text-gray-700 mb-12 leading-relaxed">
+          We combine sacred cultural values with cutting-edge matchmaking technology to help
+          you find your perfect life partner. Our platform ensures verified profiles, secure communication,
+          and personalized recommendations that honor your traditions while embracing modern convenience.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-white max-w-6xl mx-auto">
+          {features.map((feature, index) => {
+            const IconComponent = feature.icon;
+            return (
               <div 
                 key={index}
                 className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border-l-4 border-green-500"
               >
-                <Check className="w-8 h-8 text-red-600 mx-auto mb-2" />
-                <p className="font-semibold text-gray-800 text-lg">{feature}</p>
+                <IconComponent className="w-8 h-8 text-red-600 mx-auto mb-2" />
+                <p className="font-semibold text-gray-800 text-lg">{feature.title}</p>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* The Process */}
       <section 
@@ -210,7 +246,7 @@ const LandingPage = () => {
   </div>
 
       {/* Hover Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-yellow-500 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300"></div>
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300"></div>
     </div>
 
             ))}
@@ -273,9 +309,9 @@ const LandingPage = () => {
 
 
      {/* Call to Action */}
-<section className="py-20 bg-gradient-to-r from-yellow-400 to-red-700 text-white text-center">
+<section className="py-20 bg-gradient-to-r from-yellow-200 to-yellow-400 text-red-600 text-center">
   <div className="container mx-auto px-4">
-    <Heart className="w-16 h-16 text-green-400 mx-auto mb-6 animate-pulse" />
+    <Heart className="w-16 h-16 text-yellow-600 mx-auto mb-6 animate-pulse" />
     
     <h2 className="text-4xl md:text-5xl font-bold mb-6">
       Ready to Begin Your Love Story?
@@ -285,7 +321,7 @@ const LandingPage = () => {
       Join thousands of happy couples who found their perfect match through our platform
     </p>
     
-    <button className="bg-yellow-400 hover:bg-yellow-300 text-red-900 px-12 py-4 rounded-full font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+    <button className="bg-green-600 hover:bg-green-700 text-white px-12 py-4 rounded-full font-bold text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
       Start Your Journey Today
       <ArrowRight className="inline-block ml-3 w-6 h-6" />
     </button>
